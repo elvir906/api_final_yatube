@@ -38,7 +38,7 @@ class Comment(models.Model):
         related_name='comments'
     )
     text = models.TextField()
-    created = models.DateTimeField(        
+    created = models.DateTimeField(
         'Дата добавления',
         auto_now_add=True,
         db_index=True
@@ -56,3 +56,8 @@ class Follow(models.Model):
         related_name='following',
         on_delete=models.CASCADE,
     )
+
+    class Meta():
+        constraints = (constraints.UniqueConstraint(
+            fields=['user', 'following'], name='unique'
+        ),)

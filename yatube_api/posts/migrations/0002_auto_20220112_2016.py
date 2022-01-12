@@ -23,6 +23,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AddConstraint(
             model_name='follow',
-            constraint=models.UniqueConstraint(fields=('user', 'followimg'), name='unique'),
+            constraint=models.UniqueConstraint(fields=('user', 'following'), name='unique'),
         ),
     ]
