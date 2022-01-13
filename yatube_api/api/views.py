@@ -1,5 +1,7 @@
 from rest_framework import viewsets
 
+from django.shortcuts import get_object_or_404
+
 from posts.models import Post, Comment, Follow, Group
 from .serializers import PostSerializer, CommentSerializer
 from .serializers import FollowSerializer, GroupSerializer
@@ -10,7 +12,8 @@ class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+        group = get_object_or_404(Group, slug=serializer.initial_data['group'])
+        serializer.save(author=self.request.user, group=group)
 
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):

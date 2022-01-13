@@ -1,19 +1,23 @@
 from rest_framework import serializers
-from rest_framework.relations import SlugRelatedField
+# from rest_framework.relations import SlugRelatedField
 
 
 from posts.models import Comment, Post, Follow, Group
 
 
 class PostSerializer(serializers.ModelSerializer):
-    author = SlugRelatedField(slug_field='username', read_only=True)
+    author = serializers.SlugRelatedField(slug_field='username', read_only=True)
+    group = serializers.SlugRelatedField(slug_field='slug', read_only=True)
 
     class Meta:
         fields = '__all__'
         model = Post
 
-    def get_author(self, obj):
-        return obj.author.username
+    # def get_author(self, obj):
+    #     return obj.author.username
+
+    # def get_group(self, obj):
+    #     return obj.group.slug
 
 
 class CommentSerializer(serializers.ModelSerializer):

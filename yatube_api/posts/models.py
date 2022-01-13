@@ -26,7 +26,7 @@ class Post(models.Model):
         related_name='posts'
     )
     image = models.ImageField(
-        upload_to='posts/',
+        upload_to='media/posts/',
         null=True,
         blank=True
     )
