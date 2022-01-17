@@ -36,14 +36,13 @@ class Post(models.Model):
     )
 
     def __str__(self):
-        return self.text
+        return self.text[:20]
 
 
 class Comment(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='comments'
     )
     post = models.ForeignKey(
         Post,
@@ -61,12 +60,12 @@ class Comment(models.Model):
 class Follow(models.Model):
     user = models.ForeignKey(
         User,
-        related_name='user',
+        related_name='followings',
         on_delete=models.CASCADE,
     )
     following = models.ForeignKey(
         User,
-        related_name='following',
+        related_name='users',
         on_delete=models.CASCADE,
     )
 
