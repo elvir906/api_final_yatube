@@ -8,13 +8,13 @@ from django.shortcuts import get_object_or_404
 from posts.models import Post, Follow, Group
 from .serializers import PostSerializer, CommentSerializer
 from .serializers import FollowSerializer, GroupSerializer
-from .permission import IsAuthorOrReadOnlyPermission
+from .permission import IsAuthorOrReadOnly
 
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = (IsAuthorOrReadOnlyPermission,)
+    permission_classes = (IsAuthorOrReadOnly,)
     filter_backends = (filters.OrderingFilter,)
     pagination_class = LimitOffsetPagination
     ordering_fields = ('pub_date',)
@@ -30,7 +30,7 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
-    permission_classes = (IsAuthorOrReadOnlyPermission,)
+    permission_classes = (IsAuthorOrReadOnly,)
 
     def get_queryset(self):
         post = get_object_or_404(Post, id=self.kwargs.get('post_id'))
@@ -47,7 +47,7 @@ class FollowViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.IsAuthenticated,)
     filter_backends = (filters.SearchFilter, filters.OrderingFilter,)
     search_fields = ('=following__username',)
-    ordering_fields = ('user',)
+    ordering_fields = ('=user__username',)
 
     def get_queryset(self):
         return self.request.user.followings.all()
