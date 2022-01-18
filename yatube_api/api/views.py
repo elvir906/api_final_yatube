@@ -12,6 +12,11 @@ from .serializers import FollowSerializer, GroupSerializer
 from .permission import IsAuthorOrReadOnly
 
 
+class CreateListViewSet(mixins.CreateModelMixin, mixins.ListModelMixin,
+                        viewsets.GenericViewSet):
+    pass
+
+
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -40,11 +45,6 @@ class CommentViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         post = get_object_or_404(Post, id=self.kwargs.get('post_id'))
         serializer.save(author=self.request.user, post=post)
-
-
-class CreateListViewSet(mixins.CreateModelMixin, mixins.ListModelMixin,
-                        viewsets.GenericViewSet):
-    pass
 
 
 class FollowViewSet(CreateListViewSet):
