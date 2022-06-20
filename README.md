@@ -5,7 +5,7 @@
 ### Установка. Как развернуть проект на локальной машине
 
 ```
-git clone https://github.com/elvir906/api_final_yatube.git
+git clone https://github.com/elvir906/api_yatube.git
 ```
 
 ```
